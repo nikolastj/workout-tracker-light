@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
 
 @Injectable({
@@ -45,15 +45,10 @@ export class ExerciseApiService {
         });
         const rows = parsedSheets[1].data.filter(row => !!row.length);
         rows.shift();
-        console.log(rows);
 
-        const retVal: any[] = rows;
+        const retVal: any[] = rows; //when model is added, change this to return rows.map(row => new Exercise(row));
         return retVal;
       })
-      // catchError(error => {
-      //   console.error('Error fetching or parsing the sheet:', error);
-      //   return of(error);
-      // })
     );
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, delay, finalize, map, tap } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
 import { ExerciseApiService } from '../api/exercise-api.service';
 import { ExerciseStateService } from '../state/exercise-state.service';
@@ -18,7 +18,7 @@ export class AuthService {
     private state: ExerciseStateService
   ) {}
 
-  /** Simulate auth check (Replace with real API call) */
+  /** Simulate auth check (Replace with real API call when BE and DB are ready) */
   checkAuth(): Observable<boolean> {
     if (!this.key.exerciseSheetsKey) {
       return of(false);
