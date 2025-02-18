@@ -18,8 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   standalone: true,
   selector: 'wtl-login',
   template: `
-    <div class="flex h-full items-start justify-center w-full mt-[25vh]">
-      <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4 max-w-96">
+    <div class="mt-[25vh] flex h-full w-full items-start justify-center">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="max-w-96 space-y-4">
         <mat-form-field class="w-full">
           <mat-label>Paste Exercise Sheets Key</mat-label>
           <input matInput [formControl]="form.controls.key" required />
