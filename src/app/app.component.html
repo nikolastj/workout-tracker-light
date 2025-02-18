@@ -1,1 +1,4 @@
-<router-outlet />
+<div class="w-full h-screen bg-black p-8 theme">
+  <wtl-full-screen-loader *ngIf="isLoading | async"></wtl-full-screen-loader>
+  <router-outlet />
+</div>
