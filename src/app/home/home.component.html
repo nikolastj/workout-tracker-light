@@ -1,1 +1,38 @@
-<p class="text-white">home works!</p>
+<div class="flex h-full flex-col items-center justify-center gap-8 pb-32">
+  <button mat-raised-button color="primary" class="w-full" [routerLink]="['/workout-create-edit']">
+    <mat-icon fontSize="large">add</mat-icon>
+    Add new workout
+  </button>
+
+  <button mat-raised-button color="accent" class="w-full" [routerLink]="['/stats-dashboard']">
+    <mat-icon>bar_chart</mat-icon>
+    Check stats
+  </button>
+
+  <ng-container *ngIf="!showExtraButtons; else extraButtons">
+    <button mat-raised-button color="warn" class="w-full" (click)="toggleExtraButtons()">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-template #extraButtons>
+    <ng-container class="flex w-full flex-col gap-4">
+      <button mat-raised-button color="primary" class="w-full" [routerLink]="['/exercise-type-create']">
+        <mat-icon>fitness_center</mat-icon>
+        Add new exercise type
+      </button>
+      <button mat-raised-button color="accent" class="w-full" (click)="copyNewExerciseTypes()">
+        <mat-icon>sync</mat-icon>
+        Fetch new types
+      </button>
+      <button mat-raised-button color="accent" class="w-full" (click)="copyNewWorkouts()">
+        <mat-icon>get_app</mat-icon>
+        Fetch new workouts
+      </button>
+      <button mat-raised-button color="warn" class="w-full" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </ng-container>
+  </ng-template>
+</div>

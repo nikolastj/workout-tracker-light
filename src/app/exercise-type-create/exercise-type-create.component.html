@@ -1,0 +1,47 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex w-full flex-col gap-4 pt-2">
+  <mat-slide-toggle [formControl]="enableVariationControl" class="mb-2">Variation of Exercise</mat-slide-toggle>
+
+  <mat-form-field appearance="fill" class="w-full" *ngIf="enableVariationControl.value">
+    <mat-label>Variation of Exercise</mat-label>
+    <mat-select formControlName="variationOfExerciseId">
+      <mat-option *ngFor="let exercise of exerciseTypes" [value]="exercise.id">{{ exercise.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Exercise Name</mat-label>
+    <input matInput formControlName="name" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Primary Muscle Targeted</mat-label>
+    <mat-select formControlName="primaryMuscleTargetedId" required>
+      <mat-option *ngFor="let muscle of muscles" [value]="muscle.id">{{ muscle.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Secondary Muscles Targeted</mat-label>
+    <mat-select formControlName="secondaryMusclesTargetedIds" multiple>
+      <mat-option *ngFor="let muscle of muscles" [value]="muscle.id">{{ muscle.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Requisite Used</mat-label>
+    <input matInput formControlName="requisiteUsed" />
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="usesNegativeWeight">Uses Negative Weight</mat-slide-toggle>
+
+  <button class="mt-4" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+    Create Exercise Type
+  </button>
+</form>
+
+<button class="mt-8 w-full" mat-raised-button color="secondary" type="button" (click)="onCancel()">Cancel</button>

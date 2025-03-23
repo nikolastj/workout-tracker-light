@@ -1,5 +1,11 @@
 .theme {
-  --mdc-filled-button-container-height: 56px;
-  --mdc-filled-button-container-shape: 4px;
-  --mdc-filled-button-label-text-size: 18px;
+  @import './theme/buttons.scss';
+
+  .theme-container {
+    max-width: 30rem;
+  }
+
+  mat-slide-toggle .mdc-form-field.mat-internal-form-field {
+    gap: 0.5rem;
+  }
 }

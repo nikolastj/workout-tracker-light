@@ -18,4 +18,8 @@ export class ExerciseSheetsKeyService {
     localStorage.setItem('ExerciseSheetsKey', value);
     this._exerciseSheetsKey = value;
   }
+
+  clear() {
+    this._exerciseSheetsKey = '';
+  }
 }

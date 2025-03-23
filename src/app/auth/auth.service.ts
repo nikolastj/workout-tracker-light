@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, finalize, map, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
-import { ExerciseApiService } from '../api/exercise-api.service';
-import { ExerciseStateService } from '../state/exercise-state.service';
+import { AppStateService } from '../state/app-state.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private isAuthenticated = false;
   private loadingSubject = new BehaviorSubject<boolean>(false);
   loading$ = this.loadingSubject.asObservable();
   errorMsg = '';
 
   constructor(
     private key: ExerciseSheetsKeyService,
-    private api: ExerciseApiService,
-    private state: ExerciseStateService
+    private state: AppStateService
   ) {}
 
   /** Simulate auth check (Replace with real API call when BE and DB are ready) */
@@ -24,24 +21,20 @@ export class AuthService {
       return of(false);
     }
 
-    if (!!this.state.exercises.getValue()) {
-      this.isAuthenticated = true;
-      return of(true);
-    }
+    // if (!!this.state.exerciseTypes.getValue()) {
+    //   return of(true);
+    // }
 
     this.loadingSubject.next(true);
-    return this.api.getExercises().pipe(
-      tap(res => {
-        this.state.exercises.next(res);
-        this.isAuthenticated = true;
+    return this.state.loadData().pipe(
+      tap(() => {
         this.errorMsg = '';
       }),
-      map(() => true), // ✅ Return true if API succeeds
       catchError(error => {
         console.log(error);
         this.errorMsg = 'Invalid key';
         this.key.setKey('');
-        return of(false); // ❌ Return false if API fails
+        return of(false); // ❌ Return false if loadData() fails
       }),
       finalize(() => this.loadingSubject.next(false)) // ✅ Ensure loading stops
     );

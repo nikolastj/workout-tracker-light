@@ -1,4 +1,6 @@
-<div class="theme h-screen w-full bg-black p-8">
+<div class="theme flex h-screen w-full justify-center bg-black p-8">
   <wtl-full-screen-loader *ngIf="isLoading | async"></wtl-full-screen-loader>
-  <router-outlet />
+  <div class="theme-container flex-1">
+    <router-outlet />
+  </div>
 </div>

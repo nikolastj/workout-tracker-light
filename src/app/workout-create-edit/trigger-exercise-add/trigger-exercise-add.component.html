@@ -1,0 +1,24 @@
+<button
+  *ngIf="!showControl; else showControlRef"
+  mat-raised-button
+  color="primary"
+  type="button"
+  class="w-full"
+  (click)="showControl = !showControl"
+>
+  Add
+</button>
+
+<ng-template #showControlRef>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Add Exercise</mat-label>
+      <input type="text" matInput [formControl]="exerciseSearchControl" [matAutocomplete]="auto" appAutoFocus />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExercise($event)">
+        <mat-option *ngFor="let exercise of filteredExercises | async" [value]="exercise.id">
+          {{ exercise.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</ng-template>

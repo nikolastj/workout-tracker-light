@@ -1,0 +1,21 @@
+button {
+  --mdc-filled-button-container-height: 56px;
+  --mdc-filled-button-container-shape: 4px;
+  --mdc-filled-button-label-text-size: 18px;
+
+  --mdc-protected-button-container-height: 56px;
+  --mdc-protected-button-label-text-size: 20px;
+}
+
+//mat-icon size
+.mat-mdc-button > .mat-icon,
+.mat-mdc-unelevated-button > .mat-icon,
+.mat-mdc-raised-button > .mat-icon,
+.mat-mdc-outlined-button > .mat-icon {
+  // display: inline-block;
+  // position: relative;
+  // vertical-align: top;
+  font-size: 2.125rem;
+  height: 2.125rem;
+  width: 2.125rem;
+}
