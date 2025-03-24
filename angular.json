@@ -35,6 +35,8 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/workout-tracker-light/",
+              "outputPath": "docs",
               "budgets": [
                 {
                   "type": "initial",
