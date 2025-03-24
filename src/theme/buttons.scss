@@ -1,10 +1,10 @@
 button {
   --mdc-filled-button-container-height: 56px;
   --mdc-filled-button-container-shape: 4px;
-  --mdc-filled-button-label-text-size: 18px;
+  --mdc-filled-button-label-text-size: 16px;
 
   --mdc-protected-button-container-height: 56px;
-  --mdc-protected-button-label-text-size: 20px;
+  --mdc-protected-button-label-text-size: 18px;
 }
 
 //mat-icon size
@@ -23,7 +23,7 @@ button {
 button.set-button {
   --mdc-outlined-button-container-height: 40px;
   --mdc-outlined-button-container-shape: 12px;
-  --mdc-outlined-button-label-text-size: 18px;
+  --mdc-outlined-button-label-text-size: 16px;
 }
 
 button.set-add {
