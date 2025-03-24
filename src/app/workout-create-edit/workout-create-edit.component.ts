@@ -71,9 +71,9 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
       console.log('Form Submitted', this.form.value);
       const formValue = this.form.getRawValue();
 
-      let workouts = JSON.parse(localStorage.getItem('workouts') || '[]');
+      let workouts = JSON.parse(localStorage.getItem('workouts_v2') || '[]');
       workouts.push(formValue);
-      localStorage.setItem('workouts', JSON.stringify(workouts));
+      localStorage.setItem('workouts_v2', JSON.stringify(workouts));
 
       this.router.navigate(['']);
     }

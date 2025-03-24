@@ -50,7 +50,7 @@ export class HomeComponent {
   }
 
   checkWorkouts() {
-    const workouts: Workout = JSON.parse(localStorage.getItem('workouts') || '[]');
+    const workouts: Workout = JSON.parse(localStorage.getItem('workouts_v2') || '[]');
     console.log('Workouts:', workouts);
     this.router.navigate(['/workouts-overview']);
   }

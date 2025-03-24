@@ -18,8 +18,8 @@ export class WorkoutsOverviewComponent {
 
   loadLists() {
     const list = this.state.workouts.getValue() ?? [];
-    const storageList = localStorage.getItem('workouts')
-      ? JSON.parse(localStorage.getItem('workouts') || '[]')
+    const storageList = localStorage.getItem('workouts_v2')
+      ? JSON.parse(localStorage.getItem('workouts_v2') || '[]')
       : [];
 
     this.list = [
@@ -28,6 +28,8 @@ export class WorkoutsOverviewComponent {
         (item: any) => !list.some((listItem: Workout) => listItem.id === item.id)
       )
     ];
+
+    localStorage.setItem('workouts_v2', JSON.stringify(this.list));
   }
 
   copyToClipboard(workout: Workout) {
