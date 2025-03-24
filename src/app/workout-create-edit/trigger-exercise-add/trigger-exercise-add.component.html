@@ -6,7 +6,8 @@
   class="w-full"
   (click)="showControl = !showControl"
 >
-  Add
+  <mat-icon>add_circle_outline</mat-icon>
+  Add Exercise
 </button>
 
 <ng-template #showControlRef>
@@ -17,6 +18,10 @@
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectExercise($event)">
         <mat-option *ngFor="let exercise of filteredExercises | async" [value]="exercise.id">
           {{ exercise.name }}
+          <span class="text-sm opacity-70">{{ exercise.requisiteUsed ? '/' + exercise.requisiteUsed : '' }}</span>
+          <span class="text-sm text-primary opacity-70"
+            >&nbsp;/{{ exercise.primaryMuscleTargeted?.popularName ?? exercise.primaryMuscleTargeted?.name }}</span
+          >
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

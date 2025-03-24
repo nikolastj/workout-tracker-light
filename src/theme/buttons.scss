@@ -19,3 +19,17 @@ button {
   height: 2.125rem;
   width: 2.125rem;
 }
+
+button.set-button {
+  --mdc-outlined-button-container-height: 40px;
+  --mdc-outlined-button-container-shape: 12px;
+  --mdc-outlined-button-label-text-size: 18px;
+}
+
+button.set-add {
+  --mdc-filled-button-container-color: #004f4f;
+  --mdc-filled-button-label-text-color: #00fbfb;
+  width: 96px;
+  padding: 0;
+  --mdc-filled-button-container-shape: 12px;
+}

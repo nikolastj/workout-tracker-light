@@ -1,11 +1,11 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export class ExerciseSet {
-  order: number;
-  reps: number;
-  weight: number;
-  isWarmupSet: boolean;
-  isDropSet: boolean;
+  order: number | null;
+  reps: number | null;
+  weight: number | null;
+  isWarmupSet: boolean | null;
+  isDropSet: boolean | null;
 
   constructor(order: number, reps: number, weight: number, isWarmupSet = false, isDropSet = false) {
     this.order = order;
@@ -25,13 +25,13 @@ export type ExerciseSetFormControls = {
 };
 
 export class ExerciseSetForm extends FormGroup<ExerciseSetFormControls> {
-  constructor() {
+  constructor(value?: ExerciseSet) {
     super({
-      order: new FormControl<number | null>(null),
-      reps: new FormControl<number | null>(null),
-      weight: new FormControl<number | null>(null),
-      isWarmupSet: new FormControl<boolean | null>(null),
-      isDropSet: new FormControl<boolean | null>(null)
+      order: new FormControl<number | null>(value?.order ?? null),
+      reps: new FormControl<number | null>(value?.reps ?? 10),
+      weight: new FormControl<number | null>(value?.weight ?? 30),
+      isWarmupSet: new FormControl<boolean | null>(value?.isWarmupSet ?? false),
+      isDropSet: new FormControl<boolean | null>(value?.isDropSet ?? false)
     });
   }
 }

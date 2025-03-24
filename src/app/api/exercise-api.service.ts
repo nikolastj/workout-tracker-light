@@ -5,6 +5,7 @@ import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
 import { ExerciseType, ExerciseTypeDTO } from '../model/exercise-type.model';
 import { Muscle } from '../model/muscle.model';
 import { Workout, WorkoutDTO } from '../model/workout.model';
+import { decodeObject } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,17 @@ export class ExerciseApiService {
 
         const sheet = parsedSheets[2].data.filter(row => !!row.length);
         const flatSheet = sheet.reduce((acc, row) => acc.concat(row), []);
-        const dataObjects = flatSheet.filter(cell => !!cell).map(cell => JSON.parse(cell));
+        const dataObjects = flatSheet
+          .filter(cell => !!cell)
+          .map(cell => {
+            try {
+              return decodeObject(cell);
+            } catch (e) {
+              console.error('Failed to parse JSON:', cell, e);
+              return undefined;
+            }
+          })
+          .filter(cell => cell !== undefined);
         const workouts = dataObjects
           .map(cell => new WorkoutDTO(cell))
           .map(cell => Workout.fromDTOAndTypes(cell, exercises));

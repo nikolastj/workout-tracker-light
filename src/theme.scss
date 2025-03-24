@@ -9,3 +9,25 @@
     gap: 0.5rem;
   }
 }
+
+.cdk-overlay-container {
+  @import './theme/buttons.scss';
+
+  mat-slide-toggle .mdc-form-field.mat-internal-form-field {
+    gap: 0.5rem;
+  }
+
+  .cdk-overlay-pane {
+    display: flex;
+    justify-content: center;
+  }
+
+  .full-screen-dialog .mat-mdc-dialog-container {
+    max-width: 30rem;
+    margin: 0 !important;
+
+    .mat-mdc-dialog-surface {
+      border-radius: 0 !important;
+    }
+  }
+}

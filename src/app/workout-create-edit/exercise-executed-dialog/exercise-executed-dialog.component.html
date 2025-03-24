@@ -1,0 +1,60 @@
+<div class="flex h-full w-full flex-col justify-between bg-background p-4">
+  <div>
+    <div mat-dialog-title class="flex pb-2 text-2xl text-text">
+      <div class="flex-grow">{{ exerciseName }}</div>
+      <div class="flex flex-grow-0 flex-wrap gap-1">
+        <mat-chip>{{ exerciseMuscle }}</mat-chip>
+        <mat-chip>{{ exerciseEquipment }}</mat-chip>
+      </div>
+    </div>
+
+    <div mat-dialog-content>
+      <form [formGroup]="form">
+        <div formArrayName="sets" class="flex flex-col gap-2 border-b border-t border-text py-2">
+          <div
+            *ngFor="let set of form.controls.sets.controls; let i = index"
+            [formGroupName]="i"
+            class="flex justify-between"
+          >
+            <button
+              mat-stroked-button
+              [color]="set.controls.order.value !== selectedSetIndex ? 'primary' : 'accent'"
+              class="set-button"
+              (click)="editSet(set)"
+            >
+              <div class="flex">
+                <span class="opacity-65">{{ set.controls.order.value }})&nbsp;</span>
+                <span>{{ set.controls.reps.value }} </span>
+                <mat-icon>close</mat-icon>
+                <span>{{ set.controls.weight.value }}<span class="text-sm opacity-65">&nbsp;kg</span></span>
+              </div>
+            </button>
+
+            <button
+              [hidden]="set.controls.order.value !== selectedSetIndex"
+              mat-mini-fab
+              color="accent"
+              (click)="deleteSet(i)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <wtl-set-form
+      *ngIf="setForm"
+      [form]="setForm"
+      (emitSet)="addSet($event)"
+      (emitEditSet)="updateSet($event)"
+    ></wtl-set-form>
+  </div>
+
+  <div mat-dialog-actions class="flex gap-4">
+    <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+    <button class="flex-1" mat-raised-button color="primary" type="submit" [disabled]="!form.valid" (click)="onSave()">
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ isEdit ? 'Update Exercise' : 'Add Exercise' }}
+    </button>
+  </div>
+</div>

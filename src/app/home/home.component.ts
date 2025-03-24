@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
-import { AppStateService } from '../state/app-state.service';
 import { getNewlyAddedExercises } from '../shared/utils';
+import { Workout } from '../model/workout.model';
 
 @Component({
   selector: 'wtl-home',
@@ -18,8 +18,7 @@ export class HomeComponent {
 
   constructor(
     private router: Router,
-    private key: ExerciseSheetsKeyService,
-    private state: AppStateService
+    private key: ExerciseSheetsKeyService
   ) {}
 
   toggleExtraButtons() {
@@ -48,5 +47,11 @@ export class HomeComponent {
 
   copyNewWorkouts() {
     console.log('TBD');
+  }
+
+  checkWorkouts() {
+    const workouts: Workout = JSON.parse(localStorage.getItem('workouts') || '[]');
+    console.log('Workouts:', workouts);
+    this.router.navigate(['/workouts-overview']);
   }
 }

@@ -13,6 +13,7 @@ import { ExerciseType } from '../../model/exercise-type.model';
 import { DestroyableDirective } from '../../shared/destroyable.directive';
 import { takeUntil, startWith, map } from 'rxjs';
 import { AutoFocusDirective } from '../../shared/auto-focus.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'wtl-trigger-exercise-add',
@@ -23,7 +24,8 @@ import { AutoFocusDirective } from '../../shared/auto-focus.directive';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    AutoFocusDirective
+    AutoFocusDirective,
+    MatIconModule
   ],
   templateUrl: './trigger-exercise-add.component.html'
 })
@@ -69,7 +71,16 @@ export class TriggerExerciseAddComponent extends DestroyableDirective {
     } else {
       const filterValue = value?.toLowerCase() ?? '';
       return exercises
-        .filter(exercise => exercise.name.toLowerCase().includes(filterValue))
+        .filter(
+          exercise =>
+            exercise.name.toLowerCase().includes(filterValue) ||
+            exercise.requisiteUsed?.toLowerCase().includes(filterValue) ||
+            (
+              exercise.primaryMuscleTargeted?.popularName?.toLowerCase() ??
+              exercise.primaryMuscleTargeted?.name?.toLowerCase() ??
+              ''
+            ).includes(filterValue)
+        )
         .filter(exercise => !this.selectedExerciseIds.includes(exercise.id));
     }
   }

@@ -11,21 +11,21 @@ import { AppStateService } from '../state/app-state.service';
 export class WorkoutDTO {
   id: number;
   dateCreated: Date;
-  exercisesDto: ExerciseExecutedDTO[];
+  exercises: ExerciseExecutedDTO[];
   comment: string;
   energyLevel: number;
 
   constructor(data: Partial<WorkoutDTO>) {
     this.id = data.id || 0;
     this.dateCreated = new Date(data.dateCreated || new Date());
-    this.exercisesDto = data.exercisesDto || [];
+    this.exercises = data.exercises || [];
     this.comment = data.comment || '';
     this.energyLevel = data.energyLevel || 0;
   }
 }
 
 export class Workout extends WorkoutDTO {
-  exercises: ExerciseExecuted[];
+  override exercises: ExerciseExecuted[];
 
   constructor(data: WorkoutDTO, exercises: ExerciseExecuted[]) {
     super(data);
@@ -33,7 +33,7 @@ export class Workout extends WorkoutDTO {
   }
 
   static fromDTOAndTypes(dto: WorkoutDTO, exerciseTypes: ExerciseType[]): Workout {
-    const enrichedExercises = dto.exercisesDto.map(exerciseDTO =>
+    const enrichedExercises = dto.exercises.map(exerciseDTO =>
       ExerciseExecuted.fromDTOAndTypes(exerciseDTO, exerciseTypes)
     );
 

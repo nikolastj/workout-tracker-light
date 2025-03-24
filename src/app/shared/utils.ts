@@ -33,7 +33,7 @@ export function pushNewExercise(newExercise: ExerciseType) {
 export function prunedNewlyAddedExercises(existingExercises: ExerciseType[]): ExerciseType[] {
   const newlyAddedExercises = getNewlyAddedExercises();
 
-  if (newlyAddedExercises.length === 0) return existingExercises;
+  if (newlyAddedExercises.length === 0) return [];
   const existingIds = new Set(existingExercises.map(ex => ex.id));
   return newlyAddedExercises.filter(ex => !existingIds.has(ex.id));
 }
@@ -47,4 +47,14 @@ export function pruneAndPushNewlyAddedExercises(existingExercises: ExerciseType[
   localStorage.setItem('newlyAddedExercises', JSON.stringify(pruned));
 
   return [...existingExercises, ...pruned];
+}
+
+export function encodeObject(workout: any): string {
+  const jsonString = JSON.stringify(workout);
+  return btoa(jsonString); // Base64 encode
+}
+
+export function decodeObject(encodedWorkout: string): any {
+  const jsonString = atob(encodedWorkout); // Base64 decode
+  return JSON.parse(jsonString);
 }

@@ -1,0 +1,12 @@
+<div class="flex w-full flex-col gap-4">
+  <button
+    *ngFor="let workout of list"
+    mat-raised-button
+    color="primary"
+    type="button"
+    class="w-full"
+    (click)="copyToClipboard(workout)"
+  >
+    {{ workout.dateCreated | date }}
+  </button>
+</div>

@@ -14,9 +14,7 @@ type ExerciseTypeFormControls = {
 };
 
 export class ExerciseTypeForm extends FormGroup<ExerciseTypeFormControls> {
-  state: AppStateService;
-
-  constructor(state: AppStateService, exerciseType?: ExerciseType) {
+  constructor(exerciseType?: ExerciseType) {
     super({
       id: new FormControl<number | null>(exerciseType ? exerciseType.id : null),
       name: new FormControl<string | null>(
@@ -39,7 +37,6 @@ export class ExerciseTypeForm extends FormGroup<ExerciseTypeFormControls> {
         exerciseType ? exerciseType.variationOfExerciseId : null
       )
     });
-    this.state = state;
   }
 
   static setId(exerciseType: ExerciseTypeForm, state: AppStateService) {

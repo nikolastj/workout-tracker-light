@@ -1,24 +1,46 @@
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex w-full flex-col gap-4 pt-2">
-  <wtl-trigger-exercise-add (addExercise)="addExercise($event)"></wtl-trigger-exercise-add>
-  <div formArrayName="exercises">
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="flex h-full w-full flex-col justify-between gap-4 pt-2"
+>
+  <wtl-trigger-exercise-add
+    (addExercise)="addExercise($event)"
+    [selectedExerciseIds]="selectedExercisesIds"
+  ></wtl-trigger-exercise-add>
+  <div formArrayName="exercises" class="flex flex-col gap-2">
     <div *ngFor="let exercise of form.controls.exercises.controls; let i = index">
       <div [formGroupName]="i">
-        <!-- Add form fields for ExerciseExecutedForm here -->
+        <button mat-raised-button color="primary" type="button" class="w-full" (click)="editExercise(exercise, i)">
+          <div class="flex items-center gap-2">
+            {{ exercise.controls.exerciseType.value?.name }}
+            <span class="rounded-full bg-primary px-2 py-0.5 text-xs text-black opacity-50">{{
+              exercise.controls.exerciseType.value?.requisiteUsed
+            }}</span>
+          </div>
+        </button>
       </div>
     </div>
   </div>
 
-  <mat-form-field appearance="fill" class="w-full">
-    <mat-label>Comment</mat-label>
-    <textarea matInput formControlName="comment"></textarea>
-  </mat-form-field>
+  <div class="flex w-full flex-col">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Comment</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="w-full">
-    <mat-label>Energy Level</mat-label>
-    <input matInput formControlName="energyLevel" type="number" />
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Energy Level</mat-label>
+      <input matInput formControlName="energyLevel" type="number" />
+    </mat-form-field>
 
-  <button class="mt-4" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Save Workout</button>
+    <div class="flex gap-4">
+      <button class="mt-4" mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
 
-  <button class="mt-4" mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+      <button class="mt-4 flex-1" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+        <mat-icon>check_circle_outline</mat-icon>
+        Save Workout
+      </button>
+    </div>
+  </div>
 </form>

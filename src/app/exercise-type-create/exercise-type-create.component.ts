@@ -47,7 +47,7 @@ export class CreateExerciseTypeComponent extends DestroyableDirective implements
   }
 
   ngOnInit(): void {
-    this.form = new ExerciseTypeForm(this.state);
+    this.form = new ExerciseTypeForm();
     ExerciseTypeForm.setId(this.form, this.state);
     this.form.controls.variationOfExerciseId.disable();
     this.setOptions();
@@ -115,9 +115,7 @@ export class CreateExerciseTypeComponent extends DestroyableDirective implements
 
   onCancel(): void {
     if (this.form?.touched) {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        panelClass: 'custom-dialog-theme'
-      });
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent);
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {

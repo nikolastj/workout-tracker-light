@@ -1,0 +1,65 @@
+<form [formGroup]="form" class="flex flex-col pt-2">
+  <div class="flex gap-4">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Reps</mat-label>
+      <input matInput formControlName="reps" type="number" min="1" step="1" />
+    </mat-form-field>
+
+    <div class="flex items-center justify-end gap-4 pb-4">
+      <div class="flex flex-col-reverse items-center gap-2">
+        <button mat-mini-fab color="primary" (click)="modifyReps(-1)">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="modifyReps(1)">
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+      </div>
+
+      <div class="flex flex-col-reverse items-center gap-2">
+        <button mat-mini-fab color="primary" (click)="modifyReps(-5)">
+          <mat-icon>keyboard_double_arrow_down</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="modifyReps(5)">
+          <mat-icon>keyboard_double_arrow_up</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-4">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Weight</mat-label>
+      <input matInput formControlName="weight" type="number" min="1" step="1" />
+    </mat-form-field>
+
+    <div class="flex items-center justify-end gap-4 pb-4">
+      <div class="flex flex-col-reverse items-center gap-2">
+        <button mat-mini-fab color="primary" (click)="modifyWeight(-1)">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="modifyWeight(1)">
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+      </div>
+
+      <div class="flex flex-col-reverse items-center gap-2">
+        <button mat-mini-fab color="primary" (click)="modifyWeight(-5)">
+          <mat-icon>keyboard_double_arrow_down</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="modifyWeight(5)">
+          <mat-icon>keyboard_double_arrow_up</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-start justify-between pb-4">
+    <div class="flex items-center justify-start gap-4">
+      <mat-slide-toggle formControlName="isWarmupSet">Warmup</mat-slide-toggle>
+      <mat-slide-toggle formControlName="isDropSet">Drop</mat-slide-toggle>
+    </div>
+    <button mat-flat-button class="set-add" color="primary" (click)="addSet()">
+      <mat-icon>file_download_done</mat-icon>{{ isEdit ? 'Fix' : 'Add' }}
+    </button>
+  </div>
+</form>

@@ -23,7 +23,7 @@ export class AppStateService {
           this.muscles.next(res.muscles);
           const exercises = pruneAndPushNewlyAddedExercises(res.exercises);
           this.exerciseTypes.next(exercises);
-          console.log('exercises', exercises);
+          this.workouts.next(res.workouts);
         }),
         map(() => true)
       );
