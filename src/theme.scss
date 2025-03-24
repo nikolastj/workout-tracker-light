@@ -25,6 +25,7 @@
   .full-screen-dialog .mat-mdc-dialog-container {
     max-width: 30rem;
     margin: 0 !important;
+    @apply pb-16;
 
     .mat-mdc-dialog-surface {
       border-radius: 0 !important;

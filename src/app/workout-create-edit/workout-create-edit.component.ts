@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExerciseExecutedForm } from '../model/exercise-executed.model';
 import { ExerciseExecutedDialogComponent } from './exercise-executed-dialog/exercise-executed-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { EditDirective } from '../shared/edit.directive';
 
 @Component({
   selector: 'wtl-workout-create-edit',
@@ -33,7 +34,7 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.compo
   ],
   templateUrl: './workout-create-edit.component.html'
 })
-export class WorkoutCreateEditComponent implements OnInit {
+export class WorkoutCreateEditComponent extends EditDirective implements OnInit {
   form?: WorkoutForm;
   exerciseTypes: ExerciseType[] = [];
 
@@ -41,7 +42,9 @@ export class WorkoutCreateEditComponent implements OnInit {
     private state: AppStateService,
     private router: Router,
     private dialog: MatDialog
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.setOptions();
@@ -82,6 +85,7 @@ export class WorkoutCreateEditComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.form?.markAsUntouched();
           this.router.navigate(['']);
         }
       });
@@ -134,5 +138,12 @@ export class WorkoutCreateEditComponent implements OnInit {
         this.form?.markAsTouched();
       }
     });
+  }
+
+  override hasUnsavedChanges(): boolean {
+    if (this.form?.touched) {
+      return true;
+    }
+    return false;
   }
 }
