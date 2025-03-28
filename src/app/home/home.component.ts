@@ -54,4 +54,8 @@ export class HomeComponent {
     console.log('Workouts:', workouts);
     this.router.navigate(['/workouts-overview']);
   }
+
+  clearLocal() {
+    localStorage.removeItem('workouts_v2');
+  }
 }
