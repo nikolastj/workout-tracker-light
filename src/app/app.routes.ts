@@ -14,9 +14,19 @@ export const routes: Routes = [
   { path: 'stats-dashboard', component: StatsDashboardComponent, canActivate: [AuthGuard] },
   {
     path: 'workout-create-edit',
-    component: WorkoutCreateEditComponent,
     canActivate: [AuthGuard],
-    canDeactivate: [CanDeactivateGuard]
+    children: [
+      {
+        path: '',
+        component: WorkoutCreateEditComponent,
+        canDeactivate: [CanDeactivateGuard]
+      },
+      {
+        path: ':id',
+        component: WorkoutCreateEditComponent,
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
   },
   { path: 'workouts-overview', component: WorkoutsOverviewComponent, canActivate: [AuthGuard] },
   {

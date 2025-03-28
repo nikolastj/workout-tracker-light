@@ -7,6 +7,14 @@
     class="w-full"
     (click)="copyToClipboard(workout)"
   >
-    {{ workout.dateCreated | date }}
+    <div class="flex items-center gap-2">
+      {{ workout.dateCreated | date }}
+      <span *ngIf="workout.isEdit" class="rounded-full bg-primary px-2 py-0.5 text-xs text-black opacity-50"
+        >Updated</span
+      >
+      <span *ngIf="workout.isLocal" class="rounded-full bg-primary px-2 py-0.5 text-xs text-black opacity-50"
+        >Unsaved</span
+      >
+    </div>
   </button>
 </div>

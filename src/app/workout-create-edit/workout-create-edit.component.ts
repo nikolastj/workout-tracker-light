@@ -6,9 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppStateService } from '../state/app-state.service';
-import { WorkoutForm } from '../model/workout.model';
+import { WorkoutDisplay, WorkoutForm } from '../model/workout.model';
 import { ExerciseType } from '../model/exercise-type.model';
 import { TriggerExerciseAddComponent } from './trigger-exercise-add/trigger-exercise-add.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,27 +37,41 @@ import { EditDirective } from '../shared/edit.directive';
 export class WorkoutCreateEditComponent extends EditDirective implements OnInit {
   form?: WorkoutForm;
   exerciseTypes: ExerciseType[] = [];
+  editId?: number;
 
   constructor(
     private state: AppStateService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.setOptions();
+    this.getRouteParam();
     this.initForm();
-  }
-
-  private initForm() {
-    this.form = new WorkoutForm();
-    WorkoutForm.setId(this.form, this.state);
   }
 
   private setOptions() {
     this.exerciseTypes = this.state.exerciseTypes.getValue() || [];
+  }
+
+  private getRouteParam() {
+    this.editId = Number(this.route.snapshot.paramMap.get('id'));
+  }
+  private initForm() {
+    const storageList = localStorage.getItem('workouts_v2')
+      ? JSON.parse(localStorage.getItem('workouts_v2') || '[]')
+      : [];
+
+    const workout = [...(this.state.workouts.getValue() ?? []), ...storageList].find(
+      w => w.id === this.editId
+    );
+
+    this.form = new WorkoutForm(workout);
+    if (!this.editId) WorkoutForm.setId(this.form, this.state);
   }
 
   get selectedExercisesIds(): number[] {
@@ -69,12 +83,15 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
   onSubmit(): void {
     if (this.form?.valid) {
       console.log('Form Submitted', this.form.value);
-      const formValue = this.form.getRawValue();
+      const formValue = this.form.getRawValue() as WorkoutDisplay;
+      formValue.isLocal = true;
+      if (this.editId) formValue.isEdit = true;
 
       let workouts = JSON.parse(localStorage.getItem('workouts_v2') || '[]');
       workouts.push(formValue);
       localStorage.setItem('workouts_v2', JSON.stringify(workouts));
 
+      this.form = new WorkoutForm();
       this.router.navigate(['']);
     }
   }

@@ -50,13 +50,16 @@ export type WorkoutTypeFormControls = {
 };
 
 export class WorkoutForm extends FormGroup<WorkoutTypeFormControls> {
-  constructor() {
+  constructor(value?: Workout) {
     super({
-      id: new FormControl<number | null>(null),
-      dateCreated: new FormControl<Date | null>(new Date()),
-      exercises: new FormArray<ExerciseExecutedForm>([], [Validators.required]),
-      comment: new FormControl<string | null>(null),
-      energyLevel: new FormControl<number | null>(null)
+      id: new FormControl<number | null>(value?.id ?? null),
+      dateCreated: new FormControl<Date | null>(value?.dateCreated ?? new Date()),
+      exercises: new FormArray<ExerciseExecutedForm>(
+        value?.exercises.map(exercise => new ExerciseExecutedForm(exercise)) || [],
+        [Validators.required]
+      ),
+      comment: new FormControl<string | null>(value?.comment ?? null),
+      energyLevel: new FormControl<number | null>(value?.energyLevel ?? null)
     });
   }
 
@@ -67,4 +70,10 @@ export class WorkoutForm extends FormGroup<WorkoutTypeFormControls> {
     const highestId = Math.max(...workouts.map(et => et.id), 0);
     form.controls.id.setValue(highestId + 1, { emitEvent: false });
   }
+}
+
+//used for to highligh workouts that are not saved in the "database"
+export class WorkoutDisplay extends Workout {
+  isEdit?: boolean;
+  isLocal?: boolean;
 }

@@ -8,7 +8,7 @@
     (addExercise)="addExercise($event)"
     [selectedExerciseIds]="selectedExercisesIds"
   ></wtl-trigger-exercise-add>
-  <div formArrayName="exercises" class="flex flex-col gap-2">
+  <div formArrayName="exercises" class="-mx-4 flex flex-col gap-2 overflow-hidden overflow-y-scroll px-4">
     <div *ngFor="let exercise of form.controls.exercises.controls; let i = index">
       <div [formGroupName]="i">
         <button mat-raised-button color="primary" type="button" class="w-full" (click)="editExercise(exercise, i)">

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -9,9 +9,9 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [MatButtonModule, MatDialogModule],
   template: `
     <div class="flex flex-col p-4">
-      <h1 mat-dialog-title>Confirm Action</h1>
+      <h1 mat-dialog-title>{{ title }}</h1>
       <div mat-dialog-content>
-        <p>There is unsaved data. Are you sure you want to cancel?</p>
+        <p>{{ message }}</p>
       </div>
       <div mat-dialog-actions class="dialog-actions">
         <button
@@ -21,7 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
           class="uppercase"
           (click)="onCancel()"
         >
-          Cancel
+          {{ cancelButtonText }}
         </button>
         <button
           mat-raised-button
@@ -30,14 +30,30 @@ import { MatDialogModule } from '@angular/material/dialog';
           class="uppercase"
           (click)="onConfirm()"
         >
-          Confirm
+          {{ confirmButtonText }}
         </button>
       </div>
     </div>
   `
 })
 export class ConfirmationDialogComponent {
-  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>) {}
+  title = 'Confirm Action';
+  message = 'Are you sure you want to proceed?';
+  confirmButtonText = 'Confirm';
+  cancelButtonText = 'Cancel';
+
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: ConfirmModalProps
+  ) {
+    if (data) {
+      this.title = data.title;
+      this.message = data.message;
+      this.confirmButtonText = data.confirmButtonText;
+      this.cancelButtonText = data.cancelButtonText;
+    }
+  }
 
   onConfirm(): void {
     this.dialogRef.close(true);
@@ -46,4 +62,11 @@ export class ConfirmationDialogComponent {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+}
+
+export class ConfirmModalProps {
+  title: string = 'Confirm Action';
+  message: string = 'Are you sure you want to proceed?';
+  confirmButtonText: string = 'Confirm';
+  cancelButtonText: string = 'Cancel';
 }
