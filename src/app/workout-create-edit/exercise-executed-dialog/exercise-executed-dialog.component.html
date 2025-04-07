@@ -10,34 +10,48 @@
 
     <div mat-dialog-content>
       <form [formGroup]="form">
-        <div formArrayName="sets" class="flex flex-col gap-2 border-b border-t border-text py-2">
-          <div
-            *ngFor="let set of form.controls.sets.controls; let i = index"
-            [formGroupName]="i"
-            class="flex justify-between"
-          >
-            <button
-              mat-stroked-button
-              [color]="set.controls.order.value !== selectedSetIndex ? 'primary' : 'accent'"
-              class="set-button"
-              (click)="editSet(set)"
+        <div class="flex w-full border-b border-t border-text py-2">
+          <div *ngIf="lastExecutedExercise" class="flex w-1/2 flex-col gap-2">
+            <div *ngFor="let set of lastExecutedExercise.sets" class="flex items-center gap-2">
+              <button mat-stroked-button color="primary" class="set-button pointer-events-none opacity-50">
+                <div class="flex">
+                  <span class="opacity-65">{{ set.order }})&nbsp;</span>
+                  <span>{{ set.reps }} </span>
+                  <mat-icon>close</mat-icon>
+                  <span>{{ set.weight }}<span class="text-sm opacity-65">&nbsp;kg</span></span>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div formArrayName="sets" class="flex w-1/2 flex-col gap-2">
+            <div
+              *ngFor="let set of form.controls.sets.controls; let i = index"
+              [formGroupName]="i"
+              class="flex items-center gap-2"
             >
-              <div class="flex">
-                <span class="opacity-65">{{ set.controls.order.value }})&nbsp;</span>
-                <span>{{ set.controls.reps.value }} </span>
-                <mat-icon>close</mat-icon>
-                <span>{{ set.controls.weight.value }}<span class="text-sm opacity-65">&nbsp;kg</span></span>
-              </div>
-            </button>
+              <button
+                mat-stroked-button
+                [color]="set.controls.order.value !== selectedSetIndex ? 'primary' : 'accent'"
+                class="set-button"
+                (click)="editSet(set)"
+              >
+                <div class="flex">
+                  <span class="opacity-65">{{ set.controls.order.value }})&nbsp;</span>
+                  <span>{{ set.controls.reps.value }} </span>
+                  <mat-icon>close</mat-icon>
+                  <span>{{ set.controls.weight.value }}<span class="text-sm opacity-65">&nbsp;kg</span></span>
+                </div>
+              </button>
 
-            <button
-              [hidden]="set.controls.order.value !== selectedSetIndex"
-              mat-mini-fab
-              color="accent"
-              (click)="deleteSet(i)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+              <button
+                [hidden]="set.controls.order.value !== selectedSetIndex"
+                mat-mini-fab
+                color="accent"
+                (click)="deleteSet(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
       </form>

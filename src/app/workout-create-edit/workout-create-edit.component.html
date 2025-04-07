@@ -14,9 +14,9 @@
         <button mat-raised-button color="primary" type="button" class="w-full" (click)="editExercise(exercise, i)">
           <div class="flex items-center gap-2">
             {{ exercise.controls.exerciseType.value?.name }}
-            <span class="rounded-full bg-primary px-2 py-0.5 text-xs text-black opacity-50">{{
-              exercise.controls.exerciseType.value?.requisiteUsed
-            }}</span>
+            <span class="rounded-full bg-primary px-2 py-0.5 text-xs text-black opacity-50">
+              {{ exercise.controls.exerciseType.value?.requisiteUsed }}
+            </span>
           </div>
         </button>
       </div>

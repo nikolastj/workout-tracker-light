@@ -113,10 +113,17 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
 
   addExercise(event: ExerciseType) {
     console.log('Adding exercise', event);
+    const workouts = this.state.workouts.getValue() ?? [];
+    workouts.sort((a, b) => new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime());
+    const lastCompletedExercise = workouts
+      .find(workout => workout.exercises.some(exercise => exercise.exerciseTypeId === event.id))
+      ?.exercises.find(exercise => exercise.exerciseTypeId === event.id);
+    console.log('previouslyDone', lastCompletedExercise);
 
     const dialogRef = this.dialog.open(ExerciseExecutedDialogComponent, {
       data: {
         selectedExerciseType: event,
+        lastCompletedExercise: lastCompletedExercise,
         editData: null
       },
       width: '100vw',

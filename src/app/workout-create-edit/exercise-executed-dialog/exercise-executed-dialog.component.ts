@@ -38,12 +38,17 @@ export class ExerciseExecutedDialogComponent {
   setForm?: ExerciseSetForm = new ExerciseSetForm();
   selectedSetIndex?: number;
   isEdit = false;
+  lastExecutedExercise?: ExerciseExecuted;
 
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ExerciseExecutedDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { selectedExerciseType: ExerciseType; editData: ExerciseExecuted }
+    public data: {
+      selectedExerciseType: ExerciseType;
+      editData: ExerciseExecuted;
+      lastCompletedExercise: ExerciseExecuted | undefined;
+    }
   ) {
     this.form = new ExerciseExecutedForm(data.editData);
     this.isEdit = !!data.editData;
@@ -55,6 +60,7 @@ export class ExerciseExecutedDialogComponent {
       data.selectedExerciseType.primaryMuscleTargeted?.name ??
       '';
     this.exerciseEquipment = data.selectedExerciseType.requisiteUsed ?? '';
+    this.lastExecutedExercise = data.lastCompletedExercise;
   }
 
   private get latestSetWeightAndReps(): ExerciseSet | undefined {
