@@ -9,8 +9,8 @@
     Check stats
   </button>
 
-  <ng-container *ngIf="!showExtraButtons; else extraButtons">
-    <button mat-raised-button color="warn" class="w-full" (click)="toggleExtraButtons()">
+  <ng-container *ngIf="!state.showExtraButtons; else extraButtons">
+    <button mat-raised-button color="warn" class="w-full" (click)="state.showExtraButtons = !state.showExtraButtons">
       <mat-icon>more_vert</mat-icon>
     </button>
   </ng-container>
@@ -34,6 +34,15 @@
         <mat-icon>get_app</mat-icon>
         Fetch new workouts
       </button>
+    </ng-container>
+
+    <ng-container *ngIf="!state.showLogoutButton; else logoutButtons">
+      <button mat-raised-button color="warn" class="w-full" (click)="state.showLogoutButton = !state.showLogoutButton">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </ng-container>
+
+    <ng-template #logoutButtons>
       <button mat-raised-button color="warn" class="w-full" (click)="logout()">
         <mat-icon>logout</mat-icon>
         Logout
@@ -42,6 +51,6 @@
         <mat-icon>Clear</mat-icon>
         Logout
       </button>
-    </ng-container>
+    </ng-template>
   </ng-template>
 </div>

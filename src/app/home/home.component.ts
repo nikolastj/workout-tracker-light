@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ExerciseSheetsKeyService } from '../state/exercise-sheets-key.service';
 import { getNewlyAddedExercises } from '../shared/utils';
 import { Workout } from '../model/workout.model';
+import { HomeStateService } from './home-state.service';
 
 @Component({
   selector: 'wtl-home',
@@ -14,16 +15,11 @@ import { Workout } from '../model/workout.model';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  showExtraButtons = false;
-
   constructor(
     private router: Router,
-    private key: ExerciseSheetsKeyService
+    private key: ExerciseSheetsKeyService,
+    public state: HomeStateService
   ) {}
-
-  toggleExtraButtons() {
-    this.showExtraButtons = true;
-  }
 
   logout() {
     this.key.clear();

@@ -13,7 +13,7 @@ import { ExerciseType } from '../model/exercise-type.model';
 import { TriggerExerciseAddComponent } from './trigger-exercise-add/trigger-exercise-add.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { ExerciseExecutedForm } from '../model/exercise-executed.model';
+import { ExerciseExecuted, ExerciseExecutedForm } from '../model/exercise-executed.model';
 import { ExerciseExecutedDialogComponent } from './exercise-executed-dialog/exercise-executed-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { EditDirective } from '../shared/edit.directive';
@@ -112,14 +112,7 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
   }
 
   addExercise(event: ExerciseType) {
-    console.log('Adding exercise', event);
-    const workouts = this.state.workouts.getValue() ?? [];
-    workouts.sort((a, b) => new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime());
-    const lastCompletedExercise = workouts
-      .find(workout => workout.exercises.some(exercise => exercise.exerciseTypeId === event.id))
-      ?.exercises.find(exercise => exercise.exerciseTypeId === event.id);
-    console.log('previouslyDone', lastCompletedExercise);
-
+    const lastCompletedExercise = this.getPreviouslyDone(event.id);
     const dialogRef = this.dialog.open(ExerciseExecutedDialogComponent, {
       data: {
         selectedExerciseType: event,
@@ -142,12 +135,15 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
   }
 
   editExercise(exercise: ExerciseExecutedForm, index: number) {
-    console.log('Editing exercise', exercise);
+    const exerciseTypeId = exercise.controls.exerciseTypeId.value;
+    let lastCompletedExercise: ExerciseExecuted | undefined;
+    if (exerciseTypeId !== null) lastCompletedExercise = this.getPreviouslyDone(exerciseTypeId);
 
     const dialogRef = this.dialog.open(ExerciseExecutedDialogComponent, {
       data: {
         selectedExerciseType: exercise.controls.exerciseType.value,
-        editData: exercise.getRawValue()
+        editData: exercise.getRawValue(),
+        lastCompletedExercise: lastCompletedExercise
       },
       width: '100vw',
       height: '100vh',
@@ -162,6 +158,16 @@ export class WorkoutCreateEditComponent extends EditDirective implements OnInit 
         this.form?.markAsTouched();
       }
     });
+  }
+
+  getPreviouslyDone(typeId: number): ExerciseExecuted | undefined {
+    const workouts = this.state.workouts.getValue() ?? [];
+    workouts
+      .sort((a, b) => new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime())
+      .reverse();
+    return workouts
+      .find(workout => workout.exercises.some(exercise => exercise.exerciseTypeId === typeId))
+      ?.exercises.find(exercise => exercise.exerciseTypeId === typeId);
   }
 
   override hasUnsavedChanges(): boolean {
