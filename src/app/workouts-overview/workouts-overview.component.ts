@@ -49,7 +49,7 @@ export class WorkoutsOverviewComponent {
     localStorage.setItem('workouts_v2', JSON.stringify(prunedStorageList));
   }
 
-  copyToClipboard(workout: WorkoutDisplay) {
+  openModal(workout: WorkoutDisplay) {
     const dialogData = new ConfirmModalProps();
     dialogData.title = 'Copy Workout';
     dialogData.message = 'Do you want to copy this workout to clipboard?';

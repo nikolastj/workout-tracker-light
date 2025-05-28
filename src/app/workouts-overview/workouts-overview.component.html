@@ -5,7 +5,7 @@
     color="primary"
     type="button"
     class="w-full"
-    (click)="copyToClipboard(workout)"
+    (click)="openModal(workout)"
   >
     <div class="flex items-center gap-2">
       {{ workout.dateCreated | date }}
